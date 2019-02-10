@@ -1,11 +1,17 @@
 import re
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail
 
 
 class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
-    photo = models.ImageField()
+    photo = ProcessedImageField(processors=[Thumbnail(300, 300)],
+                                format='JPEG',
+                                options={'quality': 60})
     tag_set = models.ManyToManyField('Tag', blank='True')
     created_at = models.DateTimeField(auto_now_add=True)  # 길이 제한 있는 문자열
     updated_at = models.DateTimeField(auto_now=True)  # 길이 제한 없는 문자열
