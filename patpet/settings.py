@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'my_profile',
+    'widget_tweaks',
     # 'allauth.socialaccount.providers.kakao',
     # 'allauth.socialaccount.providers.naver'
 ]

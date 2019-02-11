@@ -17,7 +17,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # 길이 제한 없는 문자열
 
     def __str__(self):
-        return self.content
+        return f'Post (PK: {self.pk}, Author: {self.author.username})'
 
     def get_absolute_url(self):
         return reverse('home:post_detail', args=[self.id])
@@ -32,8 +32,18 @@ class Post(models.Model):
             tag, tag_created = Tag.objects.get_or_create(name=t)
             self.tag_set.add(tag)  # NOTE: ManyToManyField 에 인스턴스 추가
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=140, unique=True)
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField()
+
+    def __str__(self):
+        return f'Comment (PK: {self.pk}, Author: {self.author.username})'

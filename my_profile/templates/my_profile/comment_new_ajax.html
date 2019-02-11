@@ -1,0 +1,6 @@
+<div id="comment{{ comment.id }}">
+  <span class="comment-username">{{ comment.author.profile.nickname }}</span> {{ comment.content }}
+  {% if user == comment.author %}
+  <input type="button" class="del-comment" value="삭제" name="{{ comment.id }}">
+  {% endif %}
+</div>

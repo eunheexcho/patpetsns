@@ -1,5 +1,6 @@
-{% extends "layout.html" %}
 
+{% extends "layout.html" %}
+{% load widget_tweaks %}
 {% block content %}
 
     <section class="posting_list">
@@ -11,8 +12,17 @@
                     <i class="fas fa-paw posting_like fa-2x"></i>
                     <i class="far fa-comments posting_like fa-2x"></i>
                     <i class="far fa-save posting_like fa-2x"></i>
-                    <p>user_id</p>
+                    <p>{{ each_post.author }}</p>
                     <p class="posting_cont">{{ each_post.content }}</p>
+
+                    <div class="panel-body">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                {% render_field form.content|add_class:'....' placeholder="...." %}
+                            <input type="submit" />
+                        </form>
+                    </div>
+
                 </div>
             </article>
         {% endfor %}
